@@ -1,14 +1,14 @@
 package sda.pl.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import sda.pl.Price;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,13 +17,14 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "orderDetailSet")
 public class Order implements Serializable{
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY) //baza danych sama generuje id
         private Long id;
 
-        LocalDate date;
+        LocalDateTime date;
         Price totalPrice;
         String email;
 
@@ -32,6 +33,47 @@ public class Order implements Serializable{
 
         boolean RODO;
 
-        @OneToMany(mappedBy = "product")
+        @OneToMany(mappedBy = "order", cascade = CascadeType.ALL /*, fetch = FetchType.EAGER // - pierwsze rozwiązanie*/)
         Set<OrderDetail> orderDetailSet;
+
+        public void addOrderDetail (OrderDetail od) {
+                if (orderDetailSet == null) {
+                        orderDetailSet = new HashSet<>();
+                }
+
+                od.setOrder(this);
+                orderDetailSet.add(od);
+        }
+
+        public void calculateTotalPrice() {
+
+                getTotalPrice().setPriceGross(BigDecimal.ZERO);
+                getTotalPrice().setPriceNet(BigDecimal.ZERO);
+                getTotalPrice().setPriceSymbol("PLN");
+
+                getOrderDetailSet().forEach(  //TODO przeanalizowac lambdy
+                        cd->
+                        {
+                                getTotalPrice().setPriceGross(getTotalPrice().getPriceGross()
+                                        .add(
+                                                cd.getPrice().getPriceGross().multiply(new BigDecimal(cd.getAmount()))
+                                        )
+                                );
+                                getTotalPrice().setPriceNet(getTotalPrice().getPriceGross()
+                                        .add(
+                                                cd.getPrice().getPriceGross().multiply(new BigDecimal(cd.getAmount()))
+                                        )
+                                );
+
+                        });
+
+//            kowalskiOrder.getOrderDetailSet().forEach( // przed połączeniem lambd
+//                    cd-> kowalskiOrder.getTotalPrice().setPriceNet(kowalskiOrder.getTotalPrice().getPriceGross()
+//                            .add(
+//                                    cd.getPrice().getPriceGross().multiply(new BigDecimal(cd.getAmount()))
+//                            )
+//                    )
+//            );
+        }
+
 }

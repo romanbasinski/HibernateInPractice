@@ -1,9 +1,6 @@
 package sda.pl;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import sda.pl.domain.OrderDetail;
 
 import javax.persistence.*;
@@ -16,6 +13,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "orderDetailSet")
 public class Product implements Serializable {
 
     @Id
