@@ -16,5 +16,10 @@
         <mapping class="sda.pl.Product" />
         <mapping class="sda.pl.domain.Order" />
         <mapping class="sda.pl.domain.OrderDetail" />
+        <mapping class="sda.pl.domain.User" />
+        <mapping class="sda.pl.domain.ProductImage" />
+        <mapping class="sda.pl.domain.Cart" />
+        <mapping class="sda.pl.domain.CartDetail" />
+        <mapping class="sda.pl.domain.ProductRating" />
     </session-factory>
 </hibernate-configuration>
