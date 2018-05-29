@@ -31,4 +31,9 @@ public class OrderDetail implements Serializable{
     Long amount;
     Price price;
 
+    public OrderDetail(CartDetail cartDetail) {
+        this.product = cartDetail.getProduct();
+        this.amount = cartDetail.getAmount();
+        this.price = cartDetail.price;
+    }
 }

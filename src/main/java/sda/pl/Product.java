@@ -1,14 +1,13 @@
 package sda.pl;
 
 import lombok.*;
-import sda.pl.domain.CartDetail;
-import sda.pl.domain.OrderDetail;
-import sda.pl.domain.ProductImage;
-import sda.pl.domain.ProductRating;
+import sda.pl.domain.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -16,7 +15,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"orderDetailSet", "cartDetailSet", "productImage", "productRatingSet"})
+@EqualsAndHashCode(exclude = {"orderDetailSet", "cartDetailSet", "productImage", "productRatingSet", "stockSet"})
 public class Product implements Serializable {
 
     @Id
@@ -45,5 +44,30 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product")
     Set<ProductRating> productRatingSet;
+
+    @OneToMany (mappedBy = "product" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    Set<Stock> stockSet;
+
+    public void addStock(WarehouseName name, BigDecimal amount) {
+        if(stockSet == null) {
+            stockSet = new HashSet<>();
+        }
+        Optional<Stock> stockExist = stockSet.stream().filter(s -> s.getWarehouseName().equals(name)).findFirst();
+
+        if (!stockExist.isPresent()) {
+            Stock stock = new Stock();
+            stock.setProduct(this);
+            stock.setWarehouseName(name);
+            stock.setAmount(amount);
+            stockSet.add(stock);
+
+        } else {
+            stockExist.ifPresent(s -> {
+                s.setAmount(s.getAmount().add(amount));
+            });
+        }
+    }
+
+
 
 }

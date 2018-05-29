@@ -17,4 +17,11 @@ public class ProductRepositoryTest {
         Assert.assertTrue(product.get().getProductImage().getImage() != null);
 
     }
+
+    @org.junit.Test
+    public void findProductWithMagic () {
+        ProductRepository.findProductWithMagic(2l);
+    }
+
+
 }

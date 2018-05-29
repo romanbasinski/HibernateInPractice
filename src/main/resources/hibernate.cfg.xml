@@ -21,5 +21,7 @@
         <mapping class="sda.pl.domain.Cart" />
         <mapping class="sda.pl.domain.CartDetail" />
         <mapping class="sda.pl.domain.ProductRating" />
+        <mapping class="sda.pl.domain.Stock" />
+        <mapping class="sda.pl.domain.OrderComplaint" />
     </session-factory>
 </hibernate-configuration>

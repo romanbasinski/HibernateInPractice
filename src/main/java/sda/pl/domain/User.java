@@ -4,6 +4,7 @@ package sda.pl.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -34,5 +35,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     Set<ProductRating> productRatingSet;
 
+    @Transient
+    BigDecimal totalOrderPrice;
 
+    public User(Long id, String email, BigDecimal totalOrderPrice){
+        this.id = id;
+        this.email = email;
+        this.totalOrderPrice = totalOrderPrice;
+    }
 }

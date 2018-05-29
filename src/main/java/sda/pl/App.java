@@ -5,6 +5,7 @@ import sda.pl.domain.Order;
 import sda.pl.domain.OrderDetail;
 import sda.pl.repository.OrderRepository;
 import sda.pl.repository.ProductRepository;
+import sda.pl.repository.UserRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -106,6 +107,13 @@ public class App {
             OrderRepository.findAllWithProductName("KEFIR").forEach(o -> o.getOrderDetailSet()
             .forEach(od -> System.out.println("zamowienie z kefirem " + od.getProduct().getName())));
 
+
+
+            UserRepository.findAllWithTotalOrderPrice().
+                    forEach(u -> System.out.println(u.getEmail()+" "+u.getTotalOrderPrice()));
+
+
+            ProductRepository.findByNameCriteriaQuery("KEFI").forEach(p -> System.out.println("criteria: "+p.getName()));
         }
 
 

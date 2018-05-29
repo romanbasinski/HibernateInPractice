@@ -32,11 +32,24 @@ public class Order implements Serializable{
 
         @Column(name = "adress_wysylki")
         String cityName;
-
         boolean RODO;
 
         @OneToMany(mappedBy = "order", cascade = CascadeType.ALL /*, fetch = FetchType.EAGER // - pierwsze rozwiązanie*/)
         Set<OrderDetail> orderDetailSet;
+
+        @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+        //join table do laczenia  przez tabele dodatkowa
+        @JoinTable(
+                name = "order_complaint",
+                // joinColumns nazwa kolumny w tabeli doadtkowej z kluczem do tabeli laczonej
+                // + nazwa pola w emcji z kluczem
+                //po ktorym laczymy
+                joinColumns = @JoinColumn(name = "order_complaint_id", referencedColumnName = "id"),
+                // nazwa kolumny z kluczem glownym z encji Order
+                inverseJoinColumns = @JoinColumn(name = "order_id")
+        )
+        Set<OrderComplaint> orderComplaintSet;
+
 
         public void addOrderDetail (OrderDetail od) {
                 if (orderDetailSet == null) {
