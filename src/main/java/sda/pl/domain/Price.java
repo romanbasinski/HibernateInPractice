@@ -1,4 +1,4 @@
-package sda.pl;
+package sda.pl.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

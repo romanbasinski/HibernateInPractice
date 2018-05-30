@@ -2,7 +2,6 @@ package sda.pl.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sda.pl.Product;
 
 import javax.persistence.*;
 import java.io.Serializable;

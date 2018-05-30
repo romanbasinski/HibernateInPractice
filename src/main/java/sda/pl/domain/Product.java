@@ -1,7 +1,6 @@
-package sda.pl;
+package sda.pl.domain;
 
 import lombok.*;
-import sda.pl.domain.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -69,5 +68,17 @@ public class Product implements Serializable {
     }
 
 
+    public long getSumStockForSale() {
+        return getStockSet().stream().filter(stock -> !stock.getWarehouseName().equals(WarehouseName.COMPLAINT))
+                .mapToLong(s -> s.getAmount().longValue()).sum();
+    }
+
+    public void addProductRating(ProductRating productRating) {
+        if (productRatingSet == null) {
+            productRatingSet = new HashSet<>();
+        }
+        productRating.setProduct(this);
+        productRatingSet.add(productRating);
+    }
 
 }

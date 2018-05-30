@@ -12,7 +12,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"orderSet", "cartSet", "productRatingSet"})
+@EqualsAndHashCode(exclude = {"orderSet", "cart", "productRatingSet"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +29,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     Set<Order> orderSet;
 
-    @OneToMany(mappedBy = "user")
-    Set<Cart> cartSet;
+    @OneToOne(mappedBy = "user")
+    Cart cart;
 
     @OneToMany(mappedBy = "user")
     Set<ProductRating> productRatingSet;
@@ -43,4 +43,21 @@ public class User {
         this.email = email;
         this.totalOrderPrice = totalOrderPrice;
     }
+
+    public Cart createCart() {
+        Cart cart = new Cart();
+        cart.setUser(this);
+        return cart;
+    }
+
+    public ProductRating rateProduct (int rate, String description, Product product) {
+        ProductRating productRating = new ProductRating();
+        productRating.setActive(false);
+        productRating.setRate(rate);
+        productRating.setDescription(description);
+        productRating.setProduct(product);
+        return productRating;
+    }
+
+
 }

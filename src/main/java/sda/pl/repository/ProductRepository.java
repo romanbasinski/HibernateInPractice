@@ -2,10 +2,9 @@ package sda.pl.repository;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import sda.pl.Color;
+import sda.pl.domain.Color;
 import sda.pl.HibernateUtil;
-import sda.pl.Product;
-import sda.pl.domain.WarehouseName;
+import sda.pl.domain.Product;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -114,9 +113,6 @@ public class ProductRepository {
 //            query.setFirstResult() // pomiń pierwsze x produktów
             List resultList = query.getResultList();
             return resultList;
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
             return null;

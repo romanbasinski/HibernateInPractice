@@ -1,12 +1,10 @@
 package sda.pl.domain;
 
 import lombok.*;
-import sda.pl.Price;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -61,10 +59,10 @@ public class Order implements Serializable{
         }
 
         public void calculateTotalPrice() {
-
-                getTotalPrice().setPriceGross(BigDecimal.ZERO);
-                getTotalPrice().setPriceNet(BigDecimal.ZERO);
-                getTotalPrice().setPriceSymbol("PLN");
+                totalPrice = new Price();
+                totalPrice.setPriceGross(BigDecimal.ZERO);
+                totalPrice.setPriceNet(BigDecimal.ZERO);
+                totalPrice.setPriceSymbol("PLN");
 
                 getOrderDetailSet().forEach(  //TODO przeanalizowac lambdy
                         cd->

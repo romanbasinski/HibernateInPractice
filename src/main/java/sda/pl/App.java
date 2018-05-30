@@ -1,15 +1,12 @@
 package sda.pl;
 
-import org.hibernate.Session;
-import sda.pl.domain.Order;
-import sda.pl.domain.OrderDetail;
+import sda.pl.domain.*;
 import sda.pl.repository.OrderRepository;
 import sda.pl.repository.ProductRepository;
 import sda.pl.repository.UserRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 public class App {
@@ -61,7 +58,6 @@ public class App {
 
 
             ProductRepository.saveOrUpdateProduct(product10);
-
             kowalskiOrder.addOrderDetail(detail);
 
             double sum1 = kowalskiOrder.getOrderDetailSet().stream()
@@ -98,25 +94,35 @@ public class App {
 //            kowalskiOrder.getTotalPrice().setPriceSymbol("PLN");
 
             kowalskiOrder.calculateTotalPrice();
-
             OrderRepository.saveOrder(kowalskiOrder);
-
-            OrderRepository.findAll().forEach(o -> o.getOrderDetailSet()
-                    .forEach(od -> System.out.println(od.getProduct().getName()))); //domyślnie nie pobiera kolekcji z klasy dlatego trzeba zmodyfikowac Set w Order, lub zapytanie do bazy
-
-            OrderRepository.findAllWithProductName("KEFIR").forEach(o -> o.getOrderDetailSet()
-            .forEach(od -> System.out.println("zamowienie z kefirem " + od.getProduct().getName())));
-
-
-
-            UserRepository.findAllWithTotalOrderPrice().
-                    forEach(u -> System.out.println(u.getEmail()+" "+u.getTotalOrderPrice()));
-
-
-            ProductRepository.findByNameCriteriaQuery("KEFI").forEach(p -> System.out.println("criteria: "+p.getName()));
         }
 
 
+
+        OrderRepository.findAll().forEach(o -> o.getOrderDetailSet()
+                .forEach(od -> System.out.println(od.getProduct().getName()))); //domyślnie nie pobiera kolekcji z klasy dlatego trzeba zmodyfikowac Set w Order, lub zapytanie do bazy
+
+        OrderRepository.findAllWithProductName("KEFIR").forEach(o -> o.getOrderDetailSet()
+                .forEach(od -> System.out.println("zamowienie z kefirem " + od.getProduct().getName())));
+
+
+
+        UserRepository.findAllWithTotalOrderPrice().
+                forEach(u -> System.out.println(u.getEmail()+" "+u.getTotalOrderPrice()));
+
+
+        ProductRepository.findByNameCriteriaQuery("KEFI").forEach(p -> System.out.println("criteria: "+p.getName()));
+
+
+        User user = User.builder()
+                .firstName("Jan")
+                .lastName("Kowalski")
+                .email("www@wp.pl")
+                .zipCode("777")
+                .cityName("Poznan")
+                .street("Powiejska").build();
+
+        UserRepository.saveOrUpdate(user);
 
 
 

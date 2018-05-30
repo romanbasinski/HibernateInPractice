@@ -1,6 +1,7 @@
 package sda.pl;
 
 import org.junit.Test;
+import sda.pl.domain.Product;
 import sda.pl.domain.WarehouseName;
 import sda.pl.repository.ProductRepository;
 

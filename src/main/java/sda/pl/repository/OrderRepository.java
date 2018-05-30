@@ -3,10 +3,8 @@ package sda.pl.repository;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import sda.pl.HibernateUtil;
-import sda.pl.Product;
 import sda.pl.domain.Order;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
