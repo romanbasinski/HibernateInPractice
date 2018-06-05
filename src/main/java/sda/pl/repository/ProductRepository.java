@@ -130,6 +130,7 @@ public class ProductRepository {
             session = HibernateUtil.openSession();
             String hql = "SELECT COUNT(p) FROM Product p";
             Query query = session.createQuery(hql);
+//            session.createNativeQuery() // zapytania w jezyku sql
             Long singleResult = (Long) query.getSingleResult();
             return singleResult;
         } catch (Exception e) {

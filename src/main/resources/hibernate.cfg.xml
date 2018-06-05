@@ -23,5 +23,6 @@
         <mapping class="sda.pl.domain.ProductRating" />
         <mapping class="sda.pl.domain.Stock" />
         <mapping class="sda.pl.domain.OrderComplaint" />
+        <mapping class="sda.pl.domain.AdvertisingBanner" />
     </session-factory>
 </hibernate-configuration>

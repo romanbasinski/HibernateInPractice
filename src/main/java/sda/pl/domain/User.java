@@ -12,7 +12,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"orderSet", "cart", "productRatingSet"})
+@EqualsAndHashCode(exclude = {"orderSet", "cart", "productRatingSet", "advertisingBannerSet"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,14 @@ public class User {
 
     @Transient
     BigDecimal totalOrderPrice;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "advertisement_for_the_user",
+            joinColumns = @JoinColumn(name = "advertisement_banner_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    Set<AdvertisingBanner> advertisingBannerSet;
 
     public User(Long id, String email, BigDecimal totalOrderPrice){
         this.id = id;
