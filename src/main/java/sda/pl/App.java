@@ -125,9 +125,9 @@ public class App {
 //
 //        UserRepository.saveOrUpdate(user);
 
-        AdvertisingBanner advertisingBanner = new AdvertisingBanner();
-
-        AdvertisingBannerRepository.saveOrUpdateProduct(advertisingBanner);
+//        AdvertisingBanner advertisingBanner = new AdvertisingBanner();
+//
+//        AdvertisingBannerRepository.saveOrUpdateProduct(advertisingBanner);
 
 
     }
